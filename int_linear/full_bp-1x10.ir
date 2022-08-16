@@ -1,0 +1,13 @@
+fn (%input0: Tensor[(1, 10), float32], %v0_weight: Tensor[(10, 10), float32], %v0_bias: Tensor[(10), float32]) -> (Tensor[(1, 10), float32], Tensor[(10), float32], Tensor[(10, 10), float32]) {
+  %0 = nn.dense(%input0, %v0_weight, units=None) /* ty=Tensor[(1, 10), float32] */;
+  %1 = nn.bias_add(%0, %v0_bias, axis=-1) /* ty=Tensor[(1, 10), float32] */;
+  %2 = zeros(shape=[1, 10], dtype="float32") /* ty=Tensor[(1, 10), float32] */;
+  %3 = less(%1, %2) /* ty=Tensor[(1, 10), bool] */;
+  %4 = ones(shape=[1, 10], dtype="float32") /* ty=Tensor[(1, 10), float32] */;
+  %5 = where(%3, %2, %4) /* ty=Tensor[(1, 10), float32] */;
+  %6 = transpose(%5, axes=None) /* ty=Tensor[(10, 1), float32] */;
+  %7 = nn.relu(%1) /* ty=Tensor[(1, 10), float32] */;
+  %8 = sum(%5, axis=[-1], exclude=True) /* ty=Tensor[(10), float32] */;
+  %9 = nn.matmul(%6, %input0, units=None) /* ty=Tensor[(10, 10), float32] */;
+  (%7, %8, %9)
+}

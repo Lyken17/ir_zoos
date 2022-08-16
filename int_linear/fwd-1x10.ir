@@ -1,0 +1,5 @@
+fn (%input0: Tensor[(1, 10), int8], %v0_weight: Tensor[(10, 10), int8], %v0_bias: Tensor[(10), int8]) {
+  %0 = nn.dense(%input0, %v0_weight, units=None);
+  %1 = nn.bias_add(%0, %v0_bias, axis=-1);
+  nn.relu(%1)
+}
