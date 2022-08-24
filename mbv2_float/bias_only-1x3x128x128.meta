@@ -1,8 +1,7 @@
 {
   "output_info": [
     "fwd@output",
-    "2_1_bias",
-    "2_1_weight",
+    "3_1_bias",
     "0_18_0_bias",
     "0_17_conv_2_bias",
     "0_17_conv_1_0_bias",
