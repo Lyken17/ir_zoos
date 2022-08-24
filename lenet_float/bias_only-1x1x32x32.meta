@@ -1,0 +1,10 @@
+{
+  "output_info": [
+    "fwd@output",
+    "fc3_bias",
+    "fc2_bias",
+    "fc1_bias",
+    "conv2_bias",
+    "conv1_bias"
+  ]
+}
