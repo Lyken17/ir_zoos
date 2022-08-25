@@ -165,9 +165,9 @@ fn (%input: Tensor[(1, 3, 128, 128), float32], %v0_0_0_weight: Tensor[(32, 3, 3,
   %163 = nn.conv2d(%162, %v0_18_0_weight, padding=[0, 0, 0, 0], channels=1280, kernel_size=[1, 1]) /* ty=Tensor[(1, 1280, 4, 4), float32] */;
   %164 = nn.bias_add(%163, %v0_18_0_bias) /* ty=Tensor[(1, 1280, 4, 4), float32] */;
   %165 = clip(%164, a_min=0f, a_max=6f) /* ty=Tensor[(1, 1280, 4, 4), float32] */;
-  %166 = nn.adaptive_avg_pool2d(%165, output_size=[1, 1]) /* ty=Tensor[(1, 1280, 1, 1), float32] */;
-  %167 = reshape(%166, newshape=[0, -1, 1, 1]) /* ty=Tensor[(1, 1280, 1, 1), float32] */;
-  %168 = squeeze(%167, axis=[2, 3]) /* ty=Tensor[(1, 1280), float32] */;
+  %166 = mean(%165, axis=[-1]) /* ty=Tensor[(1, 1280, 4), float32] */;
+  %167 = mean(%166, axis=[-1]) /* ty=Tensor[(1, 1280), float32] */;
+  %168 = reshape(%167, newshape=[0, -1]) /* ty=Tensor[(1, 1280), float32] */;
   %169 = nn.dense(%168, %v3_1_weight, units=None) /* ty=Tensor[(1, 10), float32] */;
   %170 = nn.bias_add(%169, %v3_1_bias, axis=-1) /* ty=Tensor[(1, 10), float32] */;
   %171 = nn.log_softmax(%170) /* ty=Tensor[(1, 10), float32] */;
